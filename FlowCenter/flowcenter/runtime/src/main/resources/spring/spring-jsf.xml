@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jsf="http://jsf.jd.com/schema/jsf"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://jsf.jd.com/schema/jsf http://jsf.jd.com/schema/jsf/jsf.xsd">
+
+    <jsf:registry id="jsfRegistry" protocol="jsfRegistry" index="i.jsf.jd.com"/>
+
+    <jsf:server id="jsf" protocol="jsf"/>
+
+    <jsf:filter id="authFilter" class="com.jd.jr.business.credit.rt.jsf.AuthFilter" consumers="" />
+    
+    <!--流程中心运行时-->
+    <jsf:provider id="jroSalaryAccInfoFacade" interface="com.jd.jr.jropen.salary.api.facade.JroSalaryAccInfoFacade"
+                  alias="${jsf.salaryAccInfo.alias}"
+                  ref="jroSalaryAccInfoFacadeImpl" server="jsf">
+    </jsf:provider>
+
+</beans>

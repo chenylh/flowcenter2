@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fmq="http://code.jd.com/schema/fmq"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.jd.com/schema/fmq
+	    http://code.jd.com/schema/fmq/fmq-1.0.xsd">
+
+
+    <fmq:transport address="${mq.address}" user="${mq.producer.user}"
+                   password="${mq.producer.password}" app="${mq.producer.app}" epoll="false" sendTimeout="20000"
+                   connectionTimeout="20000" soTimeout="20000"/>
+
+    <fmq:producer id="fmqProducer" retryTimes="2" transport="fmq.transport"/>
+</beans>

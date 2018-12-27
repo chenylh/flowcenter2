@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="jmlSpdLoanApplyProcess" name="jmlSpdLoanApplyProcess" isExecutable="true">
+    <documentation>今麦郎浦发借款流程</documentation>
+    <startEvent id="StartEvent_1"></startEvent>
+    <sequenceFlow id="SequenceFlow_09xowo4" sourceRef="StartEvent_1" targetRef="Task_LoanBillCommit"></sequenceFlow>
+    <exclusiveGateway id="ExclusiveGateway_0c36qc6" name="checked?"></exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_1jzbgkj" sourceRef="Task_RiskCheck" targetRef="ExclusiveGateway_0c36qc6"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_0tsc63v" name="yes" sourceRef="ExclusiveGateway_0c36qc6" targetRef="usertask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checked== true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_049fuit" name="no" sourceRef="ExclusiveGateway_0c36qc6" targetRef="Task_1asxw87">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checked == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_0upfncf" sourceRef="Task_1asxw87" targetRef="EndEvent_13bsqqd"></sequenceFlow>
+    <sequenceFlow id="SequenceFlow_1nn2llw" sourceRef="usertask2" targetRef="EndEvent_1ogwwp9"></sequenceFlow>
+    <serviceTask id="Task_1asxw87" name="风控失败" activiti:class="org.activiti.examples.ToUppercase"></serviceTask>
+    <endEvent id="EndEvent_13bsqqd">
+      <terminateEventDefinition></terminateEventDefinition>
+    </endEvent>
+    <endEvent id="EndEvent_1ogwwp9">
+      <terminateEventDefinition></terminateEventDefinition>
+    </endEvent>
+    <userTask id="Task_LoanBillCommit" name="借款申请提交" activiti:candidateGroups="activitiTeam"></userTask>
+    <sequenceFlow id="flow1" sourceRef="Task_LoanBillCommit" targetRef="Task_RiskCheck"></sequenceFlow>
+    <userTask id="Task_RiskCheck" name="文沥风控" activiti:candidateGroups="RiskManagementTeam">
+      <extensionElements>
+        <activiti:taskListener event="create" expression="${flowExectuionNotifyListener.expression(execution)}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask2" name="银行提现处理" activiti:candidateGroups="BankManagementTeam"></userTask>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_jmlSpdLoanApplyProcess">
+    <bpmndi:BPMNPlane bpmnElement="jmlSpdLoanApplyProcess" id="BPMNPlane_jmlSpdLoanApplyProcess">
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_StartEvent_1">
+        <omgdc:Bounds height="36.0" width="36.0" x="30.0" y="104.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_0c36qc6" id="BPMNShape_ExclusiveGateway_0c36qc6">
+        <omgdc:Bounds height="40.0" width="40.0" x="428.0" y="99.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Task_1asxw87" id="BPMNShape_Task_1asxw87">
+        <omgdc:Bounds height="80.0" width="100.0" x="561.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_13bsqqd" id="BPMNShape_EndEvent_13bsqqd">
+        <omgdc:Bounds height="36.0" width="36.0" x="820.0" y="213.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1ogwwp9" id="BPMNShape_EndEvent_1ogwwp9">
+        <omgdc:Bounds height="36.0" width="36.0" x="820.0" y="103.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Task_LoanBillCommit" id="BPMNShape_Task_LoanBillCommit">
+        <omgdc:Bounds height="80.0" width="100.0" x="121.0" y="81.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Task_RiskCheck" id="BPMNShape_Task_RiskCheck">
+        <omgdc:Bounds height="79.0" width="105.0" x="270.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+        <omgdc:Bounds height="80.0" width="100.0" x="561.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_09xowo4" id="BPMNEdge_SequenceFlow_09xowo4">
+        <omgdi:waypoint x="66.0" y="122.0"></omgdi:waypoint>
+        <omgdi:waypoint x="121.0" y="121.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1jzbgkj" id="BPMNEdge_SequenceFlow_1jzbgkj">
+        <omgdi:waypoint x="375.0" y="119.0"></omgdi:waypoint>
+        <omgdi:waypoint x="428.0" y="119.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0tsc63v" id="BPMNEdge_SequenceFlow_0tsc63v">
+        <omgdi:waypoint x="468.0" y="119.0"></omgdi:waypoint>
+        <omgdi:waypoint x="561.0" y="120.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="18.0" x="494.0" y="106.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_049fuit" id="BPMNEdge_SequenceFlow_049fuit">
+        <omgdi:waypoint x="448.0" y="139.0"></omgdi:waypoint>
+        <omgdi:waypoint x="447.0" y="230.0"></omgdi:waypoint>
+        <omgdi:waypoint x="561.0" y="230.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="12.0" x="462.0" y="189.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0upfncf" id="BPMNEdge_SequenceFlow_0upfncf">
+        <omgdi:waypoint x="661.0" y="230.0"></omgdi:waypoint>
+        <omgdi:waypoint x="820.0" y="231.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1nn2llw" id="BPMNEdge_SequenceFlow_1nn2llw">
+        <omgdi:waypoint x="661.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="820.0" y="121.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="221.0" y="121.0"></omgdi:waypoint>
+        <omgdi:waypoint x="270.0" y="119.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
